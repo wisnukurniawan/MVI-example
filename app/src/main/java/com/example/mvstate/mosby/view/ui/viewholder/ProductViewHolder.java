@@ -22,8 +22,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.example.mvstate.R;
 import com.example.mvstate.mosby.businesslogic.model.Product;
@@ -44,14 +42,15 @@ public class ProductViewHolder extends RecyclerView.ViewHolder {
     return new ProductViewHolder(inflater.inflate(R.layout.item_product, null, false), listener);
   }
 
-  @BindView(R.id.productImage) ImageView image;
-  @BindView(R.id.productName) TextView name;
+ ImageView image;
+  TextView name;
 
   private Product product;
 
   private ProductViewHolder(View itemView, ProductClickedListener clickedListener) {
     super(itemView);
-    ButterKnife.bind(this, itemView);
+    image = itemView.findViewById(R.id.productImage);
+    name = itemView.findViewById(R.id.productName);
     itemView.setOnClickListener(v -> clickedListener.onProductClicked(product));
   }
 

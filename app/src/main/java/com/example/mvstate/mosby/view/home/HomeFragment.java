@@ -28,10 +28,6 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
-import butterknife.BindInt;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import com.example.mvstate.R;
 import com.example.mvstate.mosby.SampleApplication;
 import com.example.mvstate.mosby.businesslogic.model.Product;
@@ -53,15 +49,12 @@ public class HomeFragment extends MviFragment<HomeView, HomePresenter>
 
   private HomeAdapter adapter;
   private GridLayoutManager layoutManager;
-  private Unbinder unbinder;
 
-  @BindView(R.id.swipeRefreshLayout)
   SwipeRefreshLayout swipeRefreshLayout;
-  @BindView(R.id.recyclerView)
+
   RecyclerView recyclerView;
-  @BindView(R.id.loadingView) View loadingView;
-  @BindView(R.id.errorView) TextView errorView;
-  @BindInt(R.integer.grid_span_size) int spanCount;
+   View loadingView;TextView errorView;
+   int spanCount;
 
   @NonNull
   @Override public HomePresenter createPresenter() {
@@ -78,7 +71,11 @@ public class HomeFragment extends MviFragment<HomeView, HomePresenter>
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_home, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    swipeRefreshLayout=view.findViewById(R.id.swipeRefreshLayout);
+    recyclerView=view.findViewById(R.id.recyclerView);
+    loadingView=view.findViewById(R.id.loadingView);
+    errorView=view.findViewById(R.id.errorView);
+    spanCount=view.getResources().getInteger(R.integer.grid_span_size);
 
     adapter = new HomeAdapter(inflater, this);
     layoutManager = new GridLayoutManager(getActivity(), spanCount);
@@ -108,7 +105,6 @@ public class HomeFragment extends MviFragment<HomeView, HomePresenter>
 
   @Override public void onDestroyView() {
     super.onDestroyView();
-    unbinder.unbind();
   }
 
   @Override public Observable<Boolean> loadFirstPageIntent() {

@@ -10,10 +10,6 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.TransitionManager;
-import butterknife.BindInt;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import com.example.mvstate.R;
 import com.example.mvstate.mosby.SampleApplication;
 import com.example.mvstate.mosby.businesslogic.interactor.search.SearchViewState;
@@ -32,23 +28,27 @@ import java.util.concurrent.TimeUnit;
 public class SearchFragment extends MviFragment<SearchView, SearchPresenter>
     implements SearchView, ProductViewHolder.ProductClickedListener {
 
-  @BindView(R.id.searchView) android.widget.SearchView searchView;
-  @BindView(R.id.container) ViewGroup container;
-  @BindView(R.id.loadingView) View loadingView;
-  @BindView(R.id.errorView) TextView errorView;
-  @BindView(R.id.recyclerView) RecyclerView recyclerView;
-  @BindView(R.id.emptyView) View emptyView;
-  @BindInt(R.integer.grid_span_size) int spanCount;
+   android.widget.SearchView searchView;ViewGroup container1;
+   View loadingView;
+  TextView errorView;
+   RecyclerView recyclerView;
+  View emptyView;
+   int spanCount;
 
   private SearchAdapter adapter;
-  private Unbinder unbinder;
 
   @Nullable
   @Override
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_search, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    searchView = view.findViewById(R.id.searchView);
+    container1 = view.findViewById(R.id.container);
+    loadingView = view.findViewById(R.id.loadingView);
+    errorView = view.findViewById(R.id.errorView);
+    recyclerView = view.findViewById(R.id.recyclerView);
+    emptyView = view.findViewById(R.id.emptyView);
+    spanCount = view.getResources().getInteger(R.integer.grid_span_size);
 
     adapter = new SearchAdapter(inflater, this);
     recyclerView.setAdapter(adapter);
@@ -61,7 +61,6 @@ public class SearchFragment extends MviFragment<SearchView, SearchPresenter>
 
   @Override public void onDestroyView() {
     super.onDestroyView();
-    unbinder.unbind();
   }
 
   @Override public void onProductClicked(Product product) {
@@ -102,7 +101,7 @@ public class SearchFragment extends MviFragment<SearchView, SearchPresenter>
   }
 
   private void renderResult(List<Product> result) {
-    TransitionManager.beginDelayedTransition(container);
+    TransitionManager.beginDelayedTransition(container1);
     recyclerView.setVisibility(View.VISIBLE);
     loadingView.setVisibility(View.GONE);
     emptyView.setVisibility(View.GONE);
@@ -112,7 +111,7 @@ public class SearchFragment extends MviFragment<SearchView, SearchPresenter>
   }
 
   private void renderSearchNotStarted() {
-    TransitionManager.beginDelayedTransition(container);
+    TransitionManager.beginDelayedTransition(container1);
     recyclerView.setVisibility(View.GONE);
     loadingView.setVisibility(View.GONE);
     errorView.setVisibility(View.GONE);
@@ -120,7 +119,7 @@ public class SearchFragment extends MviFragment<SearchView, SearchPresenter>
   }
 
   private void renderLoading() {
-    TransitionManager.beginDelayedTransition(container);
+    TransitionManager.beginDelayedTransition(container1);
     recyclerView.setVisibility(View.GONE);
     loadingView.setVisibility(View.VISIBLE);
     errorView.setVisibility(View.GONE);
@@ -128,7 +127,7 @@ public class SearchFragment extends MviFragment<SearchView, SearchPresenter>
   }
 
   private void renderError() {
-    TransitionManager.beginDelayedTransition(container);
+    TransitionManager.beginDelayedTransition(container1);
     recyclerView.setVisibility(View.GONE);
     loadingView.setVisibility(View.GONE);
     errorView.setVisibility(View.VISIBLE);
@@ -136,7 +135,7 @@ public class SearchFragment extends MviFragment<SearchView, SearchPresenter>
   }
 
   private void renderEmptyResult() {
-    TransitionManager.beginDelayedTransition(container);
+    TransitionManager.beginDelayedTransition(container1);
     recyclerView.setVisibility(View.GONE);
     loadingView.setVisibility(View.GONE);
     errorView.setVisibility(View.GONE);

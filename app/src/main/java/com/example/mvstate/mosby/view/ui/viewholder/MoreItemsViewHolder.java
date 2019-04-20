@@ -22,8 +22,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.example.mvstate.R;
 import com.example.mvstate.mosby.businesslogic.model.AdditionalItemsLoadable;
 
@@ -42,16 +40,18 @@ public class MoreItemsViewHolder extends RecyclerView.ViewHolder {
         layoutInflater.inflate(R.layout.item_more_available, null, false), clickListener);
   }
 
-  @BindView(R.id.moreItemsCount) TextView moreItemsCount;
-  @BindView(R.id.loadingView) View loadingView;
-  @BindView(R.id.loadMoreButtton) View loadMoreButton;
-  @BindView(R.id.errorRetryButton) Button errorRetry;
+  TextView moreItemsCount;View loadingView;
+   View loadMoreButton;
+   Button errorRetry;
 
   private AdditionalItemsLoadable currentItem;
 
   private MoreItemsViewHolder(View itemView, LoadItemsClickListener listener) {
     super(itemView);
-    ButterKnife.bind(this, itemView);
+    moreItemsCount = itemView.findViewById(R.id.moreItemsCount);
+    loadingView = itemView.findViewById(R.id.loadingView);
+    loadMoreButton = itemView.findViewById(R.id.loadMoreButtton);
+    errorRetry = itemView.findViewById(R.id.errorRetryButton);
     itemView.setOnClickListener(v -> listener.loadItemsForCategory(currentItem.getCategoryName()));
     errorRetry.setOnClickListener(
         v -> listener.loadItemsForCategory(currentItem.getCategoryName()));

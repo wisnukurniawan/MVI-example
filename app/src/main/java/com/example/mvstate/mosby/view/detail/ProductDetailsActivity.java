@@ -27,21 +27,20 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.example.mvstate.R;
+import com.example.mvstate.mosby.SampleApplication;
 import com.example.mvstate.mosby.businesslogic.interactor.details.ProductDetailsViewState;
 import com.example.mvstate.mosby.businesslogic.model.Product;
 import com.example.mvstate.mosby.dependencyinjection.DependencyInjection;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hannesdorfmann.mosby3.mvi.MviActivity;
-import com.example.mvstate.mosby.SampleApplication;
 import com.jakewharton.rxbinding2.view.RxView;
 import io.reactivex.Observable;
-import java.util.Locale;
 import timber.log.Timber;
+
+import java.util.Locale;
 
 public class ProductDetailsActivity extends MviActivity<ProductDetailsView, ProductDetailsPresenter>
     implements ProductDetailsView {
@@ -51,18 +50,15 @@ public class ProductDetailsActivity extends MviActivity<ProductDetailsView, Prod
   private boolean isProductInshoppingCart = false;
   private Observable<Boolean> fabClickObservable;
 
-  @BindView(R.id.errorView) View errorView;
-  @BindView(R.id.loadingView) View loadingView;
-  @BindView(R.id.detailsView) View detailsView;
-  @BindView(R.id.price) TextView price;
-  @BindView(R.id.description) TextView description;
-  @BindView(R.id.fab)
+  View errorView;
+ View loadingView;
+  View detailsView;
+  TextView price;
+  TextView description;
   FloatingActionButton fab;
-  @BindView(R.id.backdrop) ImageView backdrop;
-  @BindView(R.id.toolbar)
+  ImageView backdrop;
   Toolbar toolbar;
-  @BindView(R.id.root) ViewGroup rootView;
-  @BindView(R.id.collapsingToolbar)
+   ViewGroup rootView;
   CollapsingToolbarLayout collapsingToolbarLayout;
 
   public static void start(Activity activity, Product product) {
@@ -74,7 +70,17 @@ public class ProductDetailsActivity extends MviActivity<ProductDetailsView, Prod
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_product_detail);
-    ButterKnife.bind(this);
+    detailsView = findViewById(R.id.detailsView);
+    price = findViewById(R.id.price);
+    loadingView = findViewById(R.id.loadingView);
+    errorView = findViewById(R.id.errorView);
+    description = findViewById(R.id.description);
+    fab = findViewById(R.id.fab);
+    backdrop = findViewById(R.id.backdrop);
+    toolbar = findViewById(R.id.toolbar);
+    rootView = findViewById(R.id.root);
+    collapsingToolbarLayout = findViewById(R.id.collapsingToolbar);
+
     setSupportActionBar(toolbar);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 

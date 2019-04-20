@@ -26,10 +26,6 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.TransitionManager;
-import butterknife.BindInt;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import com.example.mvstate.R;
 import com.example.mvstate.mosby.SampleApplication;
 import com.example.mvstate.mosby.businesslogic.model.Product;
@@ -52,12 +48,10 @@ public class CategoryFragment extends MviFragment<CategoryView, CategoryPresente
 
   private final static String CATEGORY_NAME = "categoryName";
 
-  @BindView(R.id.recyclerView)
   RecyclerView recyclerView;
-  @BindView(R.id.loadingView) View loadingView;
-  @BindView(R.id.errorView) View errorView;
-  @BindInt(R.integer.grid_span_size) int spanCount;
-  private Unbinder unbinder;
+  View loadingView;
+  View errorView;
+  int spanCount;
   private CategoryAdapter adapter;
 
   @Override public void onProductClicked(Product product) {
@@ -80,7 +74,11 @@ public class CategoryFragment extends MviFragment<CategoryView, CategoryPresente
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.fragment_category, container, false);
-    unbinder = ButterKnife.bind(this, view);
+    recyclerView = view.findViewById(R.id.recyclerView);
+    loadingView = view.findViewById(R.id.loadingView);
+    errorView = view.findViewById(R.id.errorView);
+    spanCount = view.getResources().getInteger(R.integer.grid_span_size);
+
     GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), spanCount);
     adapter = new CategoryAdapter(inflater, this);
     recyclerView.setAdapter(adapter);
@@ -92,7 +90,6 @@ public class CategoryFragment extends MviFragment<CategoryView, CategoryPresente
 
   @Override public void onDestroyView() {
     super.onDestroyView();
-    unbinder.unbind();
   }
 
   @NonNull @Override public CategoryPresenter createPresenter() {

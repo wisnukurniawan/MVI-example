@@ -30,9 +30,6 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import com.example.mvstate.R;
 import com.example.mvstate.mosby.SampleApplication;
 import com.example.mvstate.mosby.businesslogic.model.Product;
@@ -56,8 +53,6 @@ public class ShoppingCartOverviewFragment
 
   private ShoppingCartOverviewAdapter adapter;
   private PublishSubject<Product> removeRelay = PublishSubject.create();
-  private Unbinder unbinder;
-  @BindView(R.id.shoppingCartRecyclerView)
   RecyclerView recyclerView;
 
   @Nullable
@@ -65,7 +60,7 @@ public class ShoppingCartOverviewFragment
   public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
       @Nullable Bundle savedInstanceState) {
     View v = inflater.inflate(R.layout.fragment_shopping_cart, container, false);
-    unbinder = ButterKnife.bind(this, v);
+    recyclerView = v.findViewById(R.id.shoppingCartRecyclerView);
     adapter = new ShoppingCartOverviewAdapter(getActivity());
     recyclerView.setAdapter(adapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -75,7 +70,6 @@ public class ShoppingCartOverviewFragment
 
   @Override public void onDestroyView() {
     super.onDestroyView();
-    unbinder.unbind();
   }
 
   @NonNull

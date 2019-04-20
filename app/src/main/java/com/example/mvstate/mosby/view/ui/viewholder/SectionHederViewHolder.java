@@ -21,8 +21,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.example.mvstate.R;
 import com.example.mvstate.mosby.businesslogic.model.SectionHeader;
 
@@ -36,11 +34,11 @@ public class SectionHederViewHolder extends RecyclerView.ViewHolder {
         layoutInflater.inflate(R.layout.item_section_header, null, false));
   }
 
-  @BindView(R.id.sectionName) TextView sectionName;
+  TextView sectionName;
 
   private SectionHederViewHolder(View itemView) {
     super(itemView);
-    ButterKnife.bind(this, itemView);
+    sectionName = itemView.findViewById(R.id.sectionName);
   }
 
   public void onBind(SectionHeader item) {

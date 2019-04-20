@@ -25,8 +25,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.example.mvstate.R;
 import com.example.mvstate.mosby.businesslogic.model.Product;
@@ -56,9 +54,9 @@ public class ShoppingCartItemViewHolder extends RecyclerView.ViewHolder {
   private final ItemSelectedListener selectedListener;
   private ShoppingCartOverviewItem item;
   private final Drawable selectedDrawable;
-  @BindView(R.id.image) ImageView image;
-  @BindView(R.id.name) TextView name;
-  @BindView(R.id.price) TextView price;
+  ImageView image;
+  TextView name;
+  TextView price;
 
   private ShoppingCartItemViewHolder(View itemView, ItemSelectedListener itemSelectedListener) {
     super(itemView);
@@ -67,8 +65,9 @@ public class ShoppingCartItemViewHolder extends RecyclerView.ViewHolder {
     itemView.setOnLongClickListener(v -> selectedListener.onItemLongPressed(item));
     selectedDrawable = new ColorDrawable(
         itemView.getContext().getResources().getColor(R.color.selected_shopping_cart_item));
-
-    ButterKnife.bind(this, itemView);
+    image = itemView.findViewById(R.id.image);
+    name = itemView.findViewById(R.id.name);
+    price = itemView.findViewById(R.id.price);
   }
 
   public void bind(ShoppingCartOverviewItem item) {

@@ -25,9 +25,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.Unbinder;
 import com.example.mvstate.R;
 import com.example.mvstate.mosby.businesslogic.model.MainMenuItem;
 import com.example.mvstate.mosby.dependencyinjection.DependencyInjection;
@@ -45,10 +42,9 @@ public class MainActivity extends AppCompatActivity {
 
   private static final String KEY_TOOLBAR_TITLE = "toolbarTitle";
 
-  @BindView(R.id.toolbar) Toolbar toolbar;
-  @BindView(R.id.drawerLayout) DrawerLayout drawer;
-  @BindView(R.id.sliding_layout) SlidingUpPanelLayout slidingUpPanel;
-  private Unbinder unbinder;
+  Toolbar toolbar;
+  DrawerLayout drawer;
+  SlidingUpPanelLayout slidingUpPanel;
   private Disposable disposable;
   private String title;
   private PublishSubject<Boolean> clearSelectionRelay;
@@ -56,7 +52,10 @@ public class MainActivity extends AppCompatActivity {
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
-    unbinder = ButterKnife.bind(this);
+    toolbar = findViewById(R.id.toolbar);
+    drawer = findViewById(R.id.drawerLayout);
+    slidingUpPanel = findViewById(R.id.sliding_layout);
+
     toolbar.setTitle("Mosby MVI");
     toolbar.inflateMenu(R.menu.activity_main_toolbar);
     toolbar.setOnMenuItemClickListener(item -> {
@@ -96,7 +95,6 @@ public class MainActivity extends AppCompatActivity {
 
   @Override protected void onDestroy() {
     super.onDestroy();
-    unbinder.unbind();
     disposable.dispose();
     Timber.d("------- Destroyed -------");
   }

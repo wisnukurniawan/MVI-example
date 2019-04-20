@@ -21,8 +21,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.example.mvstate.R;
 import com.example.mvstate.mosby.businesslogic.model.MainMenuItem;
 
@@ -42,11 +40,11 @@ public class MainMenuViewHolder extends RecyclerView.ViewHolder {
     return new MainMenuViewHolder(inflater.inflate(R.layout.item_main_menu, null, false), listener);
   }
 
-  @BindView(R.id.name) TextView name;
+  TextView name;
 
   private MainMenuViewHolder(View itemView, MainMenuSelectionListener listener) {
     super(itemView);
-    ButterKnife.bind(this, itemView);
+    name = itemView.findViewById(R.id.name);
     itemView.setOnClickListener(v -> listener.onItemSelected(name.getText().toString()));
   }
 

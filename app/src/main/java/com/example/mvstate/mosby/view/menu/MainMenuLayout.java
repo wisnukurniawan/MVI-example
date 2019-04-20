@@ -23,8 +23,6 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import androidx.recyclerview.widget.RecyclerView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.example.mvstate.R;
 import com.example.mvstate.mosby.SampleApplication;
 import com.hannesdorfmann.mosby3.mvi.layout.MviFrameLayout;
@@ -38,17 +36,17 @@ public class MainMenuLayout extends MviFrameLayout<MainMenuView, MainMenuPresent
     implements MainMenuView {
 
   private final MainMenuAdapter adapter;
-  @BindView(R.id.loadingView) View loadingView;
-  @BindView(R.id.recyclerView)
+   View loadingView;
   RecyclerView recyclerView;
-  @BindView(R.id.errorView) View errorView;
+  View errorView;
 
   public MainMenuLayout(Context context, AttributeSet attrs) {
     super(context, attrs);
 
     inflate(context, R.layout.view_mainmenu, this);
-    ButterKnife.bind(this, this);
-
+    loadingView = findViewById(R.id.loadingView);
+    recyclerView = findViewById(R.id.recyclerView);
+    errorView = findViewById(R.id.errorView);
     adapter = new MainMenuAdapter(LayoutInflater.from(context));
     recyclerView.setAdapter(adapter);
   }
